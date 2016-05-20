@@ -18,13 +18,14 @@ request(pageToVisit, function(error, response, body) {
      // Parse the document body
      var $ = cheerio.load(body);
      console.log("Page title:  " + $('title').text());
-     console.log("Album titles: " + $('.album-details ul').text());
 
      var albumsAndArtists = [];
 
      $('.album-details ul').each(function(i, elem) {
         albumsAndArtists[i] = $(this).text();
      });
+
+     console.log("Album titles: " + albumsAndArtists);
    }
 });
 
