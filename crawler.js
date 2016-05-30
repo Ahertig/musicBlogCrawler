@@ -9,33 +9,32 @@ var pageToVisit2 = "http://calipermusic.blogspot.com/";
 module.exports = function(options) {
   var seneca = this;
 
-  seneca.add({role:'crawler', cmd:'find_albums', find_albums});
+  seneca.add({role:'crawler', cmd:'find_albums'}, function (args, callback) {
 
-  function find_albums(done) {
-    // Is this function within a function going to work? :-/
-    request(pageToVisit, function(error, response, body) {
-       if(error) {
-         console.log("Error: " + error);
-       }
-       // Check status code (200 is HTTP OK)
-       console.log("Status code: " + response.statusCode);
-       if(response.statusCode === 200) {
-         // Parse the document body
-         var $ = cheerio.load(body);
-         console.log("Page title:  " + $('title').text());
+  request(pageToVisit, function(error, response, body) {
+     console.log("IS IT GETTING HERE AT ALL");
+     if(error) {
+       console.log("Error: " + error);
+     }
+     // Check status code (200 is HTTP OK)
+     console.log("Status code: " + response.statusCode);
+     if(response.statusCode === 200) {
+       // Parse the document body
+       var $ = cheerio.load(body);
+       console.log("Page title:  " + $('title').text());
 
-         var albumsAndArtists = [];
+       var albumsAndArtists = [];
 
-         $('.album-details ul').each(function(i, elem) {
-            albumsAndArtists[i] = $(this).text();
-         });
-         // What's the purpose of this in Seneca???
-         // Is it passing albumsAndArtists for use elsewhere?
-        done(null, albumsAndArtists);
-       }
+       $('.album-details ul').each(function(i, elem) {
+          albumsAndArtists[i] = $(this).text();
+       });
 
-    });
-  }
+       console.log('Here are the albums: ', albumsAndArtists)
+       callback(null, albumsAndArtists);
+     }
+
+  });
+})
   
 }
 
