@@ -5,6 +5,9 @@
   "main": "crawler.js",
   "dependencies": {
     "cheerio": "^0.20.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.13.4",
+    "querystring": "^0.2.0",
     "request": "^2.72.0",
     "seneca": "^2.1.0",
     "url-parse": "^1.1.1"
